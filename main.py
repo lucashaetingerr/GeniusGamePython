@@ -1,7 +1,3 @@
-#FÁBRICA DE SOFTWARE
-#TRABALHO DO GRUPO 2 - TIME COLOSSUS
-#INTEGRANTES DO GRUPO:ERICK JACQUES REGERT, LUCAS ROBERTO HAETINGER E MATHEUS HENRIQUE SEHN
-
 import time #conta o tempo para executar algo na sequência (ex: time.sleep(segundos))
 import random #no nosso código, utilizamos dessa lib para escolher aleatoriamente uma das 4 cores
 
