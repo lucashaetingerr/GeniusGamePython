@@ -1,0 +1,119 @@
+class No:  # Construtor do nó. A lista encadeada será a sequência de vários objetos do tipo No.
+    def __init__(self, valor):  # Método construtor.
+        self.valor = valor  # Valor a inserir.
+        self.proximo = None  # Apontamento para o próximo nó.
+
+    def mostrar_no(self):
+        print(self.valor)
+
+
+class ListaEncadeada:  # Construtor da lista encadeada.
+    def __init__(self):
+        self.primeiro = None  # Cabeça da lista que aponta para a estrutura de dados (objeto do tipo nó).
+        self.count = 0
+
+    # Método inserir no início. O(1)
+    def inserir_inicio(self, valor):
+        novo = No(valor)  # Cria um novo objeto da classe No.
+        novo.proximo = self.primeiro
+        self.primeiro = novo
+        self.count += 1
+
+    # Método para inserir no fim
+    def inserir_fim(self, valor):
+        novo = No(valor)
+        # Verifica se a lista está vazia
+        if self.primeiro is None:
+            self.primeiro = novo
+        else:
+            # percorrer a lista até o último elemento (.proximo = None)
+            atual = self.primeiro
+            while atual.proximo is not None:
+                atual = atual.proximo
+            # atribuir o novo elemento ao .proximo do último elemento
+            atual.proximo = novo
+
+        self.count += 1
+
+    # Método para remover determinado indice
+    # Retorna True caso consiga remover a posição ou False caso contrário
+    def remover_posicao(self, indice):
+        # Verificar se a lista está vazia
+        if self.__lista_vazia():
+            print('A lista está vazia')
+            return False
+
+        # Verificar se esta tentando remover o primeiro
+        if indice == 0:
+            self.primeiro = self.primeiro.proximo
+            self.count -= 1
+            return True
+        else:
+            # variaveis para controle
+            anterior = self.primeiro
+            atual = self.primeiro.proximo
+            i = 1
+            # Percorer a lista até encontrar o indice informado
+            while i < indice and atual is not None:
+                i += 1
+                anterior = atual
+                atual = atual.proximo
+
+            # Verifica se chegou no indice informado e atual não é None
+            if i == indice and atual is not None:
+                anterior.proximo = atual.proximo
+                self.count -= 1
+                return True
+            else:
+                print('Não foi possivel remover o indice {}'.format(indice))
+                return False
+
+    # Método para remover a primeira ocorrencia do valor informado
+    # Retorna True caso encontre o valor ou False caso contrario
+    def remover_valor(self, valor):
+        indice = self.pesquisar(valor)
+
+        if indice != -1:
+            self.remover_posicao(indice)
+            return True
+
+        return False
+
+    # Método para pesquisar por valor
+    # Retorna o indice do valor dentro da lista
+    def pesquisar(self, valor):
+        indice = 0
+
+        # Percorer a lista até encontrar o valor informado
+        atual = self.primeiro
+        while atual is not None:
+            if atual.valor == valor:
+                return indice  # Retornar o indice onde o valor foi encontrado
+            indice += 1
+            atual = atual.proximo
+
+        # Caso o valor não seja encontrado na lista retornar -1
+        return -1
+    
+    # Retorna o tamanho da lista
+    def tamanho(self):
+        return self.count
+
+    # Método para limpar a lista
+    def limpar_lista(self):
+        self.primeiro = None
+        self.count = 0
+
+    # Verifica lista vazio.
+    def __lista_vazia(self):
+        return self.primeiro is None
+
+    # Método mostrar lista.
+    def mostrar_lista(self):
+        if self.__lista_vazia():  # Caso não tenha próximo.
+            print('A lista está vazia')
+            return None
+        atual = self.primeiro  # Atual ponteiro temporário que caminha pela lista.
+        while atual is not None:
+            atual.mostrar_no()
+            atual = atual.proximo
